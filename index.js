@@ -126,6 +126,13 @@ FCM.removeDeliveredNotification = (notificationID) => {
   RNFIRMessaging.removeDeliveredNotification(notificationID);
 };
 
+FCM.removeNotificationByTag = (tag) => {
+  if (!tag) {
+    return;
+  }
+  RNFIRMessaging.removeNotificationByTag(tag);
+};
+
 FCM.removeAllDeliveredNotifications = () => {
   RNFIRMessaging.removeAllDeliveredNotifications();
 };
