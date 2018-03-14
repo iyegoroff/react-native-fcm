@@ -137,6 +137,7 @@ declare module "react-native-fcm" {
 
         static removeAllDeliveredNotifications(): void;
         static removeDeliveredNotification(id: string): void;
+        static removeNotificationByTag(tag: string): void;
 
         static cancelAllLocalNotifications(): void;
         static cancelLocalNotification(id: string): string;
