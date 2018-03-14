@@ -153,6 +153,11 @@ public class FIRMessagingModule extends ReactContextBaseJavaModule implements Li
     public void removeAllDeliveredNotifications(){
         mFIRLocalMessagingHelper.removeAllDeliveredNotifications();
     }
+    
+    @ReactMethod
+    public void removeNotificationByTag(String tag) {
+        mFIRLocalMessagingHelper.removeNotificationByTag(tag);
+    }
 
     @ReactMethod
     public void subscribeToTopic(String topic){
