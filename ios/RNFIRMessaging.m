@@ -552,6 +552,19 @@ RCT_EXPORT_METHOD(removeDeliveredNotification:(NSString*) notificationId)
     }
 }
 
+RCT_EXPORT_METHOD(removeNotificationByTag:(NSString*) tag)
+{
+  if([UNUserNotificationCenter currentNotificationCenter] != nil){
+    [[UNUserNotificationCenter currentNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
+      for (NSUInteger i = 0; i < notifications.count; i++) {
+        if ([tag isEqualToString:notifications[i].request.content.userInfo[@"tag"]]) {
+          [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[notifications[i].request.identifier]];
+        }
+      }
+    }];
+  }
+}
+
 RCT_EXPORT_METHOD(removeAllDeliveredNotifications)
 {
     if([UNUserNotificationCenter currentNotificationCenter] != nil){
