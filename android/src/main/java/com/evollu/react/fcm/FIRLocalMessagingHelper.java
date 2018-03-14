@@ -132,6 +132,11 @@ public class FIRLocalMessagingHelper {
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
     }
+    
+    public void removeNotificationByTag(String tag) {
+        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(tag, 0);
+    }
 
     public void cancelAlarm(String notificationId) {
         Intent notificationIntent = new Intent(mContext, FIRLocalMessagingPublisher.class);
