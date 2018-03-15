@@ -108,6 +108,10 @@ FCM.getScheduledLocalNotifications = function() {
   return RNFIRMessaging.getScheduledLocalNotifications();
 };
 
+FCM.activeNotificationTags = function() {
+  return RNFIRMessaging.activeNotificationTags();
+};
+
 FCM.cancelLocalNotification = (notificationID) => {
   if (!notificationID) {
     return;
