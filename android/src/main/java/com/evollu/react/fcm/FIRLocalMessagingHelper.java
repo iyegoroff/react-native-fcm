@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.service.notification.StatusBarNotification;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -157,6 +158,17 @@ public class FIRLocalMessagingHelper {
             }
         }
         return array;
+    }
+    
+    public String[] activeNotificationTags() {
+        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
+        String[] tags = new String[notifications.length];
+        for (int i = 0; i < notifications.length; i++) {
+            tags[i] = notifications[i].getTag();
+        }
+
+        return tags;
     }
 
     public void setApplicationForeground(boolean foreground){
