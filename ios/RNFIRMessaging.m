@@ -619,6 +619,23 @@ RCT_EXPORT_METHOD(getScheduledLocalNotifications:(RCTPromiseResolveBlock)resolve
     }
 }
 
+RCT_EXPORT_METHOD(activeNotificationTags:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  if([UNUserNotificationCenter currentNotificationCenter] != nil){
+    [[UNUserNotificationCenter currentNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
+      NSMutableArray* list = [[NSMutableArray alloc] init];
+      for(UNNotification * notif in notifications){
+        NSString *tag = notif.request.content.userInfo[@"tag"];
+        [list addObject:tag];
+      }
+      resolve(list);
+    }];
+  }else{
+    NSMutableArray* list = [[NSMutableArray alloc] init];
+    resolve(list);
+  }
+}
+
 RCT_EXPORT_METHOD(setNotificationCategories:(NSArray *)categories)
 {
     if([UNUserNotificationCenter currentNotificationCenter] != nil) {
