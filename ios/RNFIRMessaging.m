@@ -626,7 +626,10 @@ RCT_EXPORT_METHOD(activeNotificationTags:(RCTPromiseResolveBlock)resolve rejecte
       NSMutableArray* list = [[NSMutableArray alloc] init];
       for(UNNotification * notif in notifications){
         NSString *tag = notif.request.content.userInfo[@"tag"];
-        [list addObject:tag];
+        
+        if (tag != nil) {
+          [list addObject:tag];
+        }
       }
       resolve(list);
     }];
