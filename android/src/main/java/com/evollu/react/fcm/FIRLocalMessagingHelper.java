@@ -162,13 +162,19 @@ public class FIRLocalMessagingHelper {
     
     public String[] activeNotificationTags() {
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
-        String[] tags = new String[notifications.length];
-        for (int i = 0; i < notifications.length; i++) {
-            tags[i] = notifications[i].getTag();
-        }
 
-        return tags;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            StatusBarNotification[] notifications = notificationManager.getActiveNotifications();
+            String[] tags = new String[notifications.length];
+            for (int i = 0; i < notifications.length; i++) {
+                tags[i] = notifications[i].getTag();
+            }
+
+            return tags;
+
+        } else {
+            return null;
+        }
     }
 
     public void setApplicationForeground(boolean foreground){
