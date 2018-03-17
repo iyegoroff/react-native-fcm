@@ -182,11 +182,18 @@ public class FIRMessagingModule extends ReactContextBaseJavaModule implements Li
     @ReactMethod
     public void activeNotificationTags(Promise promise) {
         String[] tags = mFIRLocalMessagingHelper.activeNotificationTags();
-        WritableArray array = Arguments.createArray();
-        for(String tag:tags){
-            array.pushString(tag);
+
+        if (tags != null) {
+            WritableArray array = Arguments.createArray();
+            for(String tag:tags){
+                array.pushString(tag);
+            }
+
+            promise.resolve(array);
+
+        } else {
+            promise.resolve(null);
         }
-        promise.resolve(array);
     }
 
     @ReactMethod
