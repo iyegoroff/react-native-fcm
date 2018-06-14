@@ -153,6 +153,11 @@ public class FIRMessagingModule extends ReactContextBaseJavaModule implements Li
     public void removeAllDeliveredNotifications(){
         mFIRLocalMessagingHelper.removeAllDeliveredNotifications();
     }
+    
+    @ReactMethod
+    public void removeNotificationByTag(String tag) {
+        mFIRLocalMessagingHelper.removeNotificationByTag(tag);
+    }
 
     @ReactMethod
     public void subscribeToTopic(String topic){
@@ -172,6 +177,23 @@ public class FIRMessagingModule extends ReactContextBaseJavaModule implements Li
             array.pushMap(Arguments.fromBundle(bundle));
         }
         promise.resolve(array);
+    }
+    
+    @ReactMethod
+    public void activeNotificationTags(Promise promise) {
+        String[] tags = mFIRLocalMessagingHelper.activeNotificationTags();
+
+        if (tags != null) {
+            WritableArray array = Arguments.createArray();
+            for(String tag:tags){
+                array.pushString(tag);
+            }
+
+            promise.resolve(array);
+
+        } else {
+            promise.resolve(null);
+        }
     }
 
     @ReactMethod

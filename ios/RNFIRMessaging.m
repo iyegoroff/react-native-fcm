@@ -559,6 +559,19 @@ RCT_EXPORT_METHOD(removeDeliveredNotification:(NSString*) notificationId)
     }
 }
 
+RCT_EXPORT_METHOD(removeNotificationByTag:(NSString*) tag)
+{
+  if([UNUserNotificationCenter currentNotificationCenter] != nil){
+    [[UNUserNotificationCenter currentNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
+      for (NSUInteger i = 0; i < notifications.count; i++) {
+        if ([tag isEqualToString:notifications[i].request.content.userInfo[@"tag"]]) {
+          [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[notifications[i].request.identifier]];
+        }
+      }
+    }];
+  }
+}
+
 RCT_EXPORT_METHOD(removeAllDeliveredNotifications)
 {
     if([UNUserNotificationCenter currentNotificationCenter] != nil){
@@ -611,6 +624,26 @@ RCT_EXPORT_METHOD(getScheduledLocalNotifications:(RCTPromiseResolveBlock)resolve
         }
         resolve(list);
     }
+}
+
+RCT_EXPORT_METHOD(activeNotificationTags:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+  if([UNUserNotificationCenter currentNotificationCenter] != nil){
+    [[UNUserNotificationCenter currentNotificationCenter] getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
+      NSMutableArray* list = [[NSMutableArray alloc] init];
+      for(UNNotification * notif in notifications){
+        NSString *tag = notif.request.content.userInfo[@"tag"];
+        
+        if (tag != nil) {
+          [list addObject:tag];
+        }
+      }
+      resolve(list);
+    }];
+  }else{
+    NSMutableArray* list = [[NSMutableArray alloc] init];
+    resolve(list);
+  }
 }
 
 RCT_EXPORT_METHOD(setNotificationCategories:(NSArray *)categories)

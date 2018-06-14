@@ -134,9 +134,11 @@ declare module "react-native-fcm" {
 
         static scheduleLocalNotification(schedule: ScheduleLocalNotification): void;
         static getScheduledLocalNotifications(): Promise<LocalNotification>;
+        static activeNotificationTags(): Promise<string[]>;
 
         static removeAllDeliveredNotifications(): void;
         static removeDeliveredNotification(id: string): void;
+        static removeNotificationByTag(tag: string): void;
 
         static cancelAllLocalNotifications(): void;
         static cancelLocalNotification(id: string): string;

@@ -108,6 +108,10 @@ FCM.getScheduledLocalNotifications = function() {
   return RNFIRMessaging.getScheduledLocalNotifications();
 };
 
+FCM.activeNotificationTags = function() {
+  return RNFIRMessaging.activeNotificationTags();
+};
+
 FCM.cancelLocalNotification = (notificationID) => {
   if (!notificationID) {
     return;
@@ -124,6 +128,13 @@ FCM.removeDeliveredNotification = (notificationID) => {
     return;
   }
   RNFIRMessaging.removeDeliveredNotification(notificationID);
+};
+
+FCM.removeNotificationByTag = (tag) => {
+  if (!tag) {
+    return;
+  }
+  RNFIRMessaging.removeNotificationByTag(tag);
 };
 
 FCM.removeAllDeliveredNotifications = () => {
